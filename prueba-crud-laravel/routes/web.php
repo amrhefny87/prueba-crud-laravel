@@ -26,9 +26,9 @@ Route::post('/',[DocumentController::class,'store'])->name('store');
 
 Route::get('/delete/{id}',[DocumentController::class,'destroy'])->name('delete');
 
-Route::get('/edit',[DocumentController::class,'edit'])->name('edit');
+Route::get('/{id}/edit',[DocumentController::class,'edit'])->name('edit');
 
-Route::put('/update/{id}',[DocumentController::class,'update'])->name('update');
+Route::get('/{id}',[DocumentController::class,'update'])->name('update');
 
 
 

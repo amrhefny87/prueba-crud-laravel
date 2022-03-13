@@ -14,13 +14,13 @@ class Subcategory extends Model
         'category_id'
     ];
 
-    
-
-    public function categories(){
-        return $this->belongsTo(Category::class);
-    }
-
     public function documents(){
         return $this->hasMany(Document::class);
     }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    
 }

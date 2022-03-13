@@ -9,9 +9,13 @@
     <label for="description">Description</label>
     <input type="text" name="description">
     <br>
-    <!-- <select name="subcategory_id" id="subcategory_id">
+    <label for="">Subcategory / Category</label>
+    <select name="subcategory_id" id="inputSubcategory_id" required="required">
         <option value="">--- Choose a Subcategory / Category ---</option>
-    </select> -->
+        @foreach ($subcategories as $subcategory)
+        <option name="subcategory_id" value="{{$subcategory->id}}">{{$subcategory->name}} / {{$subcategory->category->name}}</option>
+        @endforeach
+    </select>
     <input type="submit" value="Save">
 </form>
 

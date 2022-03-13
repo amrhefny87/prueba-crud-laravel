@@ -18,7 +18,7 @@ class Document extends Model
 
     
 
-    public function subcategories(){
+    public function subcategory() {
         return $this->belongsTo(Subcategory::class);
     }
 }

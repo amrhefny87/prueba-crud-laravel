@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Subcategory;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -14,8 +16,12 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $documents = Document::paginate(5);
-        return view ('welcome', compact('documents'));
+        
+        $documents = Document::all();
+        $subcategories = Subcategory::all();
+        $categories = Category::all();
+        return view('welcome')->with('documents',$documents)->with('subcategories',$subcategories)->with('categories', $categories);
+        
     }
 
     /**
@@ -25,7 +31,9 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        return view ('create');
+        $subcategories = Subcategory::all();
+        $categories = Category::all();
+        return view ('create')->with('subcategories',$subcategories)->with('categories', $categories);
     }
 
     /**
@@ -38,10 +46,14 @@ class DocumentController extends Controller
     {
         $document = Document::create([
             "name"=>$request->name,
-            "description"=>$request->description
+            "description"=>$request->description,
+            "subcategory_id"=>$request->subcategory_id
         ]);
         $document->save();
-        return view('welcome');
+        $documents = Document::all();
+        $subcategories = Subcategory::all();
+        $categories = Category::all();
+        return view('welcome')->with('documents',$documents)->with('subcategories',$subcategories)->with('categories', $categories);
     }
 
     /**
@@ -61,9 +73,14 @@ class DocumentController extends Controller
      * @param  \App\Models\Document  $document
      * @return \Illuminate\Http\Response
      */
-    public function edit(Document $document)
+    public function edit($id)
     {
-        return view ('edit');
+        $document=Document::find($id);
+        $subcategories = Subcategory::all();
+        $categories = Category::all();
+        return view ('edit')->with('document',$document)->with('subcategories',$subcategories)->with('categories', $categories);
+        
+        
     }
 
     /**
@@ -73,9 +90,17 @@ class DocumentController extends Controller
      * @param  \App\Models\Document  $document
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Document $document)
+    public function update(Request $request, $id)
     {
-        //
+        $document=Document::find($id);
+        $document->update([
+            "name"=>$request->name,
+            "description"=>$request->description,
+            "subcategory_id"=>$request->subcategory_id
+        ]);
+        $document->save();
+        $documents=Document::all();
+        return redirect()->route('index')->with('documents');
     }
 
     /**
@@ -84,8 +109,12 @@ class DocumentController extends Controller
      * @param  \App\Models\Document  $document
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Document $document)
+    public function destroy(Document $document, $id)
     {
-        //
+        $document=Document::findOrFail($id);
+        $document->update([
+            "deleted"=>1
+        ]);
+        return redirect()->route('index');
     }
 }
