@@ -14,7 +14,8 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        //
+        $documents = Document::paginate(5);
+        return view ('welcome', compact('documents'));
     }
 
     /**
@@ -24,7 +25,7 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        //
+        return view ('create');
     }
 
     /**
@@ -35,7 +36,12 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $document = Document::create([
+            "name"=>$request->name,
+            "description"=>$request->description
+        ]);
+        $document->save();
+        return view('welcome');
     }
 
     /**
@@ -57,7 +63,7 @@ class DocumentController extends Controller
      */
     public function edit(Document $document)
     {
-        //
+        return view ('edit');
     }
 
     /**

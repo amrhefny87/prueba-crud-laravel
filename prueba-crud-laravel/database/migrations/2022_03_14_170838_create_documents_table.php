@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',120)->unique();
             $table->string('description',520)->nullable();
-            $table->unsignedBigInteger('subcategory_id');
+            $table->unsignedBigInteger('subcategory_id')->nullable();
             $table->foreign('subcategory_id')->references('id')->on('subcategories');
             $table->boolean('deleted')->default(false);
             $table->timestamps();

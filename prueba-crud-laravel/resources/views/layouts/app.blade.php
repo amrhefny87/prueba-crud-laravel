@@ -24,6 +24,12 @@
         <div class="section-welcome">
             @yield('welcome')
         </div>
+        <div class="section-create">
+            @yield('create')
+        </div>
+        <div class="section-edit">
+            @yield('edit')
+        </div>
         
     </body>
 </html>

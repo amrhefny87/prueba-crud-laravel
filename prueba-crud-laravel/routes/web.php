@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [DocumentController::class, 'index'])->name('index');
+
+Route::get('/create',[DocumentController::class,'create'])->name('create');
+
+Route::post('/',[DocumentController::class,'store'])->name('store');
+
+Route::get('/delete/{id}',[DocumentController::class,'destroy'])->name('delete');
+
+Route::get('/edit',[DocumentController::class,'edit'])->name('edit');
+
+Route::put('/update/{id}',[DocumentController::class,'update'])->name('update');
+
+
+
+
