@@ -44,6 +44,9 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:documents|min:5|max:255'
+        ]);
         $document = Document::create([
             "name"=>$request->name,
             "description"=>$request->description,
@@ -93,9 +96,8 @@ class DocumentController extends Controller
     public function update(Request $request, $id)
     {
         $document=Document::find($id);
-        $data = request()->validate([
-            'name' => 'required|unique:documents|min:5|max:255',
-            'subcategory_id' => 'required'
+        $request->validate([
+            'name' => 'required|unique:documents|min:5|max:255'
         ]);
         $document->update([
             "name"=>$request->name,

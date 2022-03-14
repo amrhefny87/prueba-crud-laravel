@@ -13,6 +13,9 @@
             <label class="label-edit" for="name">Document Name</label>
             <input type="text" class="form-control" name="name">
         </div>
+        <div class="alert-danger mb-3">
+                {{$errors->first()}}
+        </div>
         
         <div class="d-flex flex-row mb-3">
             <label class="label-edit" for="description">Description</label>
