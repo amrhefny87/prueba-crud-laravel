@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'subcategory_id',
+        'deleted'
+    ];
+
+    
+
+    public function subcategory() {
+        return $this->belongsTo(Subcategory::class);
+    }
 }
