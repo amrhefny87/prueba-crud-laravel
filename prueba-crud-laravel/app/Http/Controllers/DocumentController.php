@@ -93,6 +93,10 @@ class DocumentController extends Controller
     public function update(Request $request, $id)
     {
         $document=Document::find($id);
+        $data = request()->validate([
+            'name' => 'required|unique:documents|min:5|max:255',
+            'subcategory_id' => 'required'
+        ]);
         $document->update([
             "name"=>$request->name,
             "description"=>$request->description,
@@ -101,6 +105,7 @@ class DocumentController extends Controller
         $document->save();
         $documents=Document::all();
         return redirect()->route('index')->with('documents');
+        
     }
 
     /**
@@ -117,4 +122,17 @@ class DocumentController extends Controller
         ]);
         return redirect()->route('index');
     }
+
+    public function search(Request $request)
+    {
+        $search_text = $_GET['search'];
+        $documents = Document::where('name','LIKE','%'.$search_text.'%')->get();
+        $subcategories = Subcategory::all();
+        $categories = Category::all();
+        return view('welcome')->with('documents',$documents)->with('subcategories',$subcategories)->with('categories', $categories);
+    }
+
+    
+
+    
 }
